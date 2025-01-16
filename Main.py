@@ -1,49 +1,67 @@
 #### Stone Paper Scissors game by Micky Guha...
 
-import random      ### Here we import random module so that a random value between 1, 0, -1 can be assigned to the variable Computer...
-Computer=random.choice([1,2,3])  ## a random value between 1,0,-1 will be assigned to Computer.. 
-print(f"{1} --> Stone \n{2} --> Paper\n{3} --> Scissors ")
-Your_input=int (input("Enter your choice: "))  ## Taking input from user in integer form..
-Values={1: "Stone", 2: "Paper", 3: "Scissors"}   ## We using dictionay to store the corresponding values of input
-print(f"You choose {Values[Your_input]}")      ## Printing the corresponding value of your input
-print(f"Computer's value: {Computer}")         ## Random value assisgned in Computer
-print(f"Computer choose {Values[Computer]}")   ## Printing the corresponding value of Computer
-if (Computer==Your_input):
-    print(f"It's Draw") 
-    print(f"Let's try again")                  ## Printing some random messages
-    print(f"Good Luck!")                       ## Printing some random mesages
+import random
+import time
 
-else:
-    if(Computer == 1 and Your_input==2):     ## Computer --> Stone  VS  User --> Paper == User Win!
-        print(f"You Win!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
+# Mapping values to their respective choices
+Values = {1: "Stone", 2: "Paper", 3: "Scissors"}
 
-    elif(Computer == 1 and Your_input==3):  ## Computer --> Stone  VS  User --> Scissors == User Lose!
-        print(f"You Lose!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
+# Initialize scores
+player_score = 0
+computer_score = 0
 
-    elif(Computer == 2 and Your_input==1):  ## Computer --> Paper  VS  User --> Stone == User Lose!
-        print(f"You Lose!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
-    
-    elif(Computer == 2 and Your_input==3):  ## Computer --> Paper  VS  User --> Scissors == User Win!
-        print(f"You Win!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
+# Enhanced Welcome Message
+print("\n----------------------------------------")
+print("#### Welcome to Rock Paper Scissors Game! ####")
+print("----------------------------------------\n")
 
-    elif(Computer == 3 and Your_input==1):  ## Computer --> Scissors  VS  User --> Stone == User Win!
-        print(f"You Win!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
+# Player name input
+player_name = input("Enter your name: ")
+print(f"\nHello, {player_name}! Let's start the game.\n")
+print("----------------------------------------")
+print(f"{1} --> Stone \n{2} --> Paper\n{3} --> Scissors\n")
+print("----------------------------------------\n")
 
-
-    elif(Computer == 3 and Your_input==2):  ## Computer --> Scissors  VS  User --> Stone == User Lose!
-        print(f"You Lose!")
-        print(f"Let's try again")                  
-        print(f"Good Luck!") 
-    else:
-        print("Try again")
-       
+while True:
+    try:
+        # Taking user input
+        Your_input = int(input("Enter your choice (1- Stone, 2- Paper, 3- Scissors, 0- Exit): "))
+        if Your_input == 0:
+            print("\n----------------------------------------")
+            print("Thanks for playing!")
+            print(f"Final Scores:\n{player_name}: {player_score} | Computer: {computer_score}")
+            print("----------------------------------------\n")
+            break
+        elif Your_input not in [1, 2, 3]:
+            print("Invalid input! Please choose between 1, 2, 3, or 0 to exit.")
+            continue
+        
+        # Computer's random choice
+        Computer = random.choice([1, 2, 3])
+        
+        print("\n----------------------------------------")
+        print(f"{player_name} chose {Values[Your_input]}.")
+        print("Computer is choosing...")
+        time.sleep(1)
+        print(f"Computer chose {Values[Computer]}.")
+        print("----------------------------------------")
+        
+        # Game logic
+        if Computer == Your_input:
+            print("It's a Draw!\n")
+        elif (Computer == 1 and Your_input == 2) or \
+             (Computer == 2 and Your_input == 3) or \
+             (Computer == 3 and Your_input == 1):
+            print(f"{player_name}, You Win this round!\n")
+            player_score += 1
+        else:
+            print("Computer Wins this round!\n")
+            computer_score += 1
+        
+        # Display current scores
+        print("----------------------------------------")
+        print(f"Current Scores -> {player_name}: {player_score} | Computer: {computer_score}")
+        print("----------------------------------------\n")
+        
+    except ValueError:
+        print("Invalid input! Please enter a number.")
